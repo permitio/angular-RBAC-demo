@@ -1,0 +1,44 @@
+.container {
+    max-width: 400px;
+    margin: 20px auto;
+}
+
+.task-form {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.task-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.task-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.finished {
+    text-decoration: line-through;
+    color: #888;
+}
+
+table {
+    margin: auto;
+}
+
+mat-spinner {
+    margin: 20px auto;
+}
+
+mat-form-field {
+    width: 100%;
+}
+
+mat-checkbox {
+    flex-grow: 1;
+    margin-right: 16px;
+}
