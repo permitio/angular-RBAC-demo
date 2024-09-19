@@ -1,0 +1,66 @@
+<table>
+  <tr>
+    <th>ROLE</th>
+    <td>{{ selectedUser }}</td>
+  </tr>
+  <tr>
+    <th>Create</th>
+    <td *ngIf="!loading">{{ 'create' | able: 'Task' }}</td>
+  </tr>
+  <tr>
+    <th>Read</th>
+    <td *ngIf="!loading">{{ 'read' | able: 'Task' }}</td>
+  </tr>
+  <tr>
+    <th>Update</th>
+    <td *ngIf="!loading">{{ 'update' | able: 'Task' }}</td>
+  </tr>
+  <tr>
+    <th>Delete</th>
+    <td *ngIf="!loading">{{ 'delete' | able: 'Task' }}</td>
+  </tr>
+</table>
+
+<div class="container">
+  <mat-form-field>
+    <mat-label>Select user</mat-label>
+    <mat-select [(value)]="selectedUser" (selectionChange)="userChanged()">
+      <mat-option value="admin">Admin</mat-option>
+      <mat-option value="moderator">Moderator</mat-option>
+      <mat-option value="editor">Editor</mat-option>
+      <mat-option value="viewer">Viewer</mat-option>
+    </mat-select>
+  </mat-form-field>
+  
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Todo App</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div *ngIf="loading">
+        <mat-spinner></mat-spinner>
+      </div>
+      <div *ngIf="!loading && ('read' | able: 'Task')">
+        <form *ngIf="'create' | able: 'Task'" (ngSubmit)="addTask()" class="task-form">
+          <mat-form-field appearance="fill">
+            <mat-label>New Task</mat-label>
+            <input matInput [(ngModel)]="newTaskName" name="newTaskName" placeholder="Enter a new task">
+          </mat-form-field>
+          <button mat-raised-button color="primary" type="submit">Add Task</button>
+        </form>
+
+        <div class="task-list">
+          <div *ngFor="let task of tasks$ | async" class="task-item">
+            <mat-checkbox [checked]="task.finished" [disabled]="!('update' | able: 'Task')" (change)="toggleTask(task.id)">
+              <span [class.finished]="task.finished">{{ task.name }}</span>
+            </mat-checkbox>
+            <button mat-icon-button color="warn" *ngIf="'delete' | able: 'Task'" (click)="removeTask(task.id)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
+
